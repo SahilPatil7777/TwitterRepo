@@ -21,7 +21,9 @@ class TweetRepository {
 
   async getWithComments(id) {
     try {
-      const tweet = await Tweet.findById(id).populate({ path: "comments" });
+      const tweet = await Tweet.findById(id)
+        .populate({ path: "comments" })
+        .lean(); // lean() is used to convert the mongoose object to a plain javascript object.
       return tweet;
     } catch (error) {
       console.log(error);
@@ -30,7 +32,7 @@ class TweetRepository {
 
   async update(tweetId, data) {
     try {
-      const tweet = await Tweet.findByIdAndUpdate(tweetId, data, { new: true });
+      const tweet = await Tweet.findByIdAndUpdate(tweetId, data, { new: true }); // new: true returns the updated document instead of the previous one.
       return tweet;
     } catch (error) {
       console.log(error);
@@ -41,6 +43,15 @@ class TweetRepository {
     try {
       const tweet = await Tweet.findByIdAndRemove(id);
       return tweet;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async getAll(offset, limit) {
+    try {
+      const tweets = await Tweet.find().skip(offset).limit(limit);//skip and limit are used to paginate the results.
+      return tweets;
     } catch (error) {
       console.log(error);
     }
