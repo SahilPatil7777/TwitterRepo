@@ -5,27 +5,20 @@ const tweetSchema = new mongoose.Schema(
     content: {
       type: String,
       required: true,
+      maxlength: [250, "Tweet cannot be more than 250 characters"],
     },
-    userEmail: {
-      type: String,
-    },
-    comments: [
+    hashtags: [
       {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Comment",
+        ref: "Hashtag",
       },
-    ],
+    ]
   },
   { timestamps: true } // timestamps is a mongoose middleware that adds createdAt and updatedAt fields to the schema.
 );
 
 // Tweet is the name of the collection in the database and it pluralizes to tweets and lowercases to tweet.
 // mongoose.model is constructor function that creates a new model.
-
-//
-tweetSchema.virtual("ContentWithEmail").get(function process() {
-  return `${this.content} Created by:${this.userEmail}`;
-});
 
 const Tweet = mongoose.model("Tweet", tweetSchema);
 module.exports = Tweet;
