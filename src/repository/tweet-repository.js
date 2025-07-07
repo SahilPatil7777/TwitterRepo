@@ -30,15 +30,6 @@ class TweetRepository {
     }
   }
 
-  async update(tweetId, data) {
-    try {
-      const tweet = await Tweet.findByIdAndUpdate(tweetId, data, { new: true }); // new: true returns the updated document instead of the previous one.
-      return tweet;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
   async destroy(id) {
     try {
       const tweet = await Tweet.findByIdAndRemove(id);
@@ -50,7 +41,7 @@ class TweetRepository {
 
   async getAll(offset, limit) {
     try {
-      const tweets = await Tweet.find().skip(offset).limit(limit);//skip and limit are used to paginate the results.
+      const tweets = await Tweet.find().skip(offset).limit(limit); //skip and limit are used to paginate the results.
       return tweets;
     } catch (error) {
       console.log(error);
