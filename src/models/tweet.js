@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const tweetSchema = new mongoose.Schema(
   {
@@ -12,7 +12,7 @@ const tweetSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
         ref: "Hashtag",
       },
-    ]
+    ],
   },
   { timestamps: true } // timestamps is a mongoose middleware that adds createdAt and updatedAt fields to the schema.
 );
@@ -21,7 +21,7 @@ const tweetSchema = new mongoose.Schema(
 // mongoose.model is constructor function that creates a new model.
 
 const Tweet = mongoose.model("Tweet", tweetSchema);
-module.exports = Tweet;
+export default Tweet;
 
 // schema is a blueprint for creating a object.
 // model is a constructor function that creates a new objects.
