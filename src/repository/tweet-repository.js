@@ -1,18 +1,14 @@
 import Tweet from "../models/tweet.js";
+import CrudRepository from "./crud-repository.js";
 
-class TweetRepository {
+class TweetRepository extends CrudRepository {
+  constructor() {
+    super(Tweet);
+  }
+
   async create(data) {
     try {
       const tweet = await Tweet.create(data);
-      return tweet;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async get(id) {
-    try {
-      const tweet = await Tweet.findById(id);
       return tweet;
     } catch (error) {
       console.log(error);
@@ -24,15 +20,6 @@ class TweetRepository {
       const tweet = await Tweet.findById(id)
         .populate({ path: "comments" })
         .lean(); // lean() is used to convert the mongoose object to a plain javascript object.
-      return tweet;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async destroy(id) {
-    try {
-      const tweet = await Tweet.findByIdAndRemove(id);
       return tweet;
     } catch (error) {
       console.log(error);
