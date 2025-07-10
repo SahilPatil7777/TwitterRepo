@@ -7,6 +7,12 @@ const tweetSchema = new mongoose.Schema(
       required: true,
       maxlength: [250, "Tweet cannot be more than 250 characters"],
     },
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Like",
+      },
+    ],
   },
   { timestamps: true } // timestamps is a mongoose middleware that adds createdAt and updatedAt fields to the schema.
 );
