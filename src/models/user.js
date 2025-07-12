@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 const userSchema = new mongoose.Schema(
   {
@@ -20,6 +21,7 @@ const userSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// convert password into hash
 userSchema.pre("save", function (next) {
   const user = this;
   const SALT = bcrypt.genSaltSync(9);
@@ -27,6 +29,25 @@ userSchema.pre("save", function (next) {
   user.password = encryptedPassword;
   next();
 });
+
+// compare user password with hashed password
+userSchema.methods.comparePassword = function compare(password) {
+  return bcrypt.compareSync(password, this.password);
+};
+
+// generate jwt token
+userSchema.methods.genJWT = function generate() {
+  return jwt.sign(
+    {
+      id: this._id,
+      email: this.email,
+    },
+    "twitter_secret",
+    {
+      expiresIn: "1h",
+    }
+  );
+};
 
 const User = mongoose.model("User", userSchema);
 
