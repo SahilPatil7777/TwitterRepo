@@ -11,6 +11,7 @@ const opts = {
 };
 
 // login to validate the token
+// passportAuth is way in which authentication using jwt
 export const passportAuth = (passport) => {
   try {
     passport.use(
