@@ -13,6 +13,7 @@ aws.config.update({
 
 const s3 = new aws.S3();
 
+// upload function is used to upload files to AWS S3 bucket it act as middleware.
 const upload = multer({
   storage: multerS3({
     s3: s3,

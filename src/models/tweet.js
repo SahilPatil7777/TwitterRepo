@@ -19,6 +19,9 @@ const tweetSchema = new mongoose.Schema(
         ref: "Comment",
       },
     ],
+    image: {
+      type: String,
+    },
   },
   { timestamps: true } // timestamps is a mongoose middleware that adds createdAt and updatedAt fields to the schema.
 );
